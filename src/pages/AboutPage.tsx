@@ -28,7 +28,7 @@ const AboutPage = () => {
           </div>
           <p className="text-sm text-muted-foreground">
             Submitted in partial fulfilment for the award of a Diploma in Information Management Systems, 
-            Department of Science and Technology, Kinkizi Stewards College, 2024-2025.
+            Department of Science and Technology, Kinkizi Stewards College, 2024-2026.
           </p>
         </div>
       </div>
