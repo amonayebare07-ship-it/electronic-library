@@ -87,8 +87,8 @@ const AboutPage = () => {
       <div className="space-y-12 mb-20">
         <div className="text-center max-w-2xl mx-auto">
           <h2 className="text-3xl font-bold mb-4">The Development Spotlight</h2>
-          <p className="text-muted-foreground italic leading-relaxed">
-            "We wanted to build a system that wasn't just functional, but also representative of the talent here at Kinkizi Stewards College. This is for our students, by our students."
+          <p className="text-muted-foreground italic leading-relaxed text-lg">
+            "Knowledge is power, and every student at Kinkizi Stewards College deserves easy access to it. This E-Library is our gift to the future — a bridge between where we are and where we are going."
           </p>
         </div>
         
