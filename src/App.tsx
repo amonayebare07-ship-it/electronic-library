@@ -19,6 +19,7 @@ import AdminMembers from "./pages/admin/AdminMembers";
 import AdminIssues from "./pages/admin/AdminIssues";
 import AdminAuthors from "./pages/admin/AdminAuthors";
 import AdminPublishers from "./pages/admin/AdminPublishers";
+import AdminRequests from "./pages/admin/AdminRequests";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -48,6 +49,7 @@ const App = () => (
             <Route path="issues" element={<AdminIssues />} />
             <Route path="authors" element={<AdminAuthors />} />
             <Route path="publishers" element={<AdminPublishers />} />
+            <Route path="requests" element={<AdminRequests />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

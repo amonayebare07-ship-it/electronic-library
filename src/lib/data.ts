@@ -29,6 +29,16 @@ export interface BookIssue {
   fine?: number;
 }
 
+export interface BookRequest {
+  id: string;
+  memberId: string;
+  bookTitle: string;
+  author: string;
+  category: string;
+  status: "pending" | "fulfilled" | "cancelled";
+  requestDate: string;
+}
+
 export const MOCK_BOOKS: Book[] = [
   { id: "1", title: "Introduction to Algorithms", author: "Thomas H. Cormen", publisher: "MIT Press", isbn: "978-0262033848", category: "Computer Science", stock: 5, description: "A comprehensive textbook covering a broad range of algorithms." },
   { id: "2", title: "Database System Concepts", author: "Abraham Silberschatz", publisher: "McGraw Hill", isbn: "978-0078022159", category: "Computer Science", stock: 3, description: "Comprehensive introduction to database systems." },

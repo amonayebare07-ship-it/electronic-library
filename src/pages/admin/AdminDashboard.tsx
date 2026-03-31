@@ -1,4 +1,4 @@
-import { BookOpen, Users, BookCopy, AlertTriangle } from "lucide-react";
+import { BookOpen, Users, BookCopy, AlertTriangle, Inbox } from "lucide-react";
 import { db } from "@/lib/db";
 
 const StatCard = ({ icon: Icon, label, value, color }: { icon: any; label: string; value: string; color: string }) => (
@@ -23,6 +23,7 @@ const AdminDashboard = () => {
   const totalStock = books.reduce((sum, b) => sum + b.stock, 0);
   const activeMembers = members.filter((m) => m.status === "active").length;
   const pendingMembers = members.filter((m) => m.status === "pending").length;
+  const pendingRequests = db.getRequests().filter((r: any) => r.status === "pending").length;
 
   return (
     <div>
@@ -32,6 +33,7 @@ const AdminDashboard = () => {
         <StatCard icon={Users} label="Active Members" value={String(activeMembers)} color="bg-primary/10 text-primary" />
         <StatCard icon={BookCopy} label="Books in Stock" value={String(totalStock)} color="bg-success/10 text-success" />
         <StatCard icon={AlertTriangle} label="Pending Members" value={String(pendingMembers)} color="bg-warning/10 text-warning" />
+        <StatCard icon={Inbox} label="Book Requests" value={String(pendingRequests)} color="bg-secondary/10 text-secondary" />
       </div>
 
       <div className="mt-8 grid gap-6 lg:grid-cols-2">

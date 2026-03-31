@@ -47,6 +47,50 @@ const CatalogPage = () => {
     navigate(`/read/${bookId}`);
   };
 
+  const handleRequestStock = (book: any) => {
+    const user = auth.getCurrentUser();
+    if (!user) {
+      toast.error("Sign in to request books");
+      return;
+    }
+
+    db.addRequest({
+      memberId: user.id,
+      bookTitle: book.title,
+      author: book.author,
+      category: book.category,
+    });
+
+    toast.success("Restock request submitted", {
+      description: `We'll notify you when ${book.title} is available.`
+    });
+  };
+
+  const [showRequestForm, setShowRequestForm] = useState(false);
+  const [requestData, setRequestData] = useState({ title: "", author: "", category: "All" });
+
+  const handleManualRequest = (e: React.FormEvent) => {
+    e.preventDefault();
+    const user = auth.getCurrentUser();
+    if (!user) {
+      toast.error("Sign in to submit requests");
+      return;
+    }
+
+    db.addRequest({
+      memberId: user.id,
+      bookTitle: requestData.title,
+      author: requestData.author,
+      category: requestData.category,
+    });
+
+    toast.success("Book request submitted", {
+      description: "Our librarians will look for this book."
+    });
+    setShowRequestForm(false);
+    setRequestData({ title: "", author: "", category: "All" });
+  };
+
   const filtered = books.filter((book) => {
     const matchSearch =
       book.title.toLowerCase().includes(search.toLowerCase()) ||
@@ -123,14 +167,78 @@ const CatalogPage = () => {
                 <BookOpen className="h-4 w-4" />
                 Read Now
               </Button>
+              {book.stock <= 0 && (
+                <Button 
+                  onClick={() => handleRequestStock(book)}
+                  variant="outline"
+                  className="w-full border-secondary text-secondary hover:bg-secondary/5 text-xs h-9"
+                >
+                  Request Restock
+                </Button>
+              )}
             </div>
           </div>
         ))}
       </div>
 
       {filtered.length === 0 && (
-        <div className="py-20 text-center text-muted-foreground">
-          No books found matching your search criteria.
+        <div className="py-20 text-center space-y-6 max-w-md mx-auto animate-fade-in">
+          <div className="flex justify-center text-muted-foreground opacity-20">
+            <BookOpen className="h-20 w-20" />
+          </div>
+          <div className="space-y-2">
+            <h3 className="text-xl font-bold">Book Not Found</h3>
+            <p className="text-muted-foreground">It seems we don't have the book you're looking for yet.</p>
+          </div>
+          <Button 
+            onClick={() => setShowRequestForm(true)}
+            className="bg-secondary text-secondary-foreground"
+          >
+            Request this Book
+          </Button>
+        </div>
+      )}
+
+      {/* Request Modal */}
+      {showRequestForm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm p-4">
+          <div className="w-full max-w-md rounded-xl border bg-card p-6 shadow-2xl animate-in fade-in zoom-in duration-300">
+            <h2 className="text-2xl font-bold mb-4">Request a Book</h2>
+            <form onSubmit={handleManualRequest} className="space-y-4">
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Book Title</label>
+                <Input 
+                  placeholder="e.g. The Great Gatsby" 
+                  value={requestData.title} 
+                  onChange={(e) => setRequestData({...requestData, title: e.target.value})}
+                  required 
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Author</label>
+                <Input 
+                  placeholder="e.g. F. Scott Fitzgerald" 
+                  value={requestData.author} 
+                  onChange={(e) => setRequestData({...requestData, author: e.target.value})}
+                  required 
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Category</label>
+                <select 
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background"
+                  value={requestData.category}
+                  onChange={(e) => setRequestData({...requestData, category: e.target.value})}
+                >
+                  {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
+                </select>
+              </div>
+              <div className="flex gap-3 pt-4">
+                <Button type="button" variant="ghost" onClick={() => setShowRequestForm(false)} className="flex-1">Cancel</Button>
+                <Button type="submit" className="flex-1 bg-secondary text-secondary-foreground font-bold">Submit Request</Button>
+              </div>
+            </form>
+          </div>
         </div>
       )}
     </div>

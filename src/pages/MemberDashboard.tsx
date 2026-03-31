@@ -10,6 +10,7 @@ const MemberDashboard = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState<Member | null>(null);
   const [issuedBooks, setIssuedBooks] = useState<(BookIssue & { book?: Book })[]>([]);
+  const [requests, setRequests] = useState<any[]>([]);
 
   const fetchData = (currentUser: Member) => {
     const allIssues = db.getIssues();
@@ -22,6 +23,10 @@ const MemberDashboard = () => {
     }));
 
     setIssuedBooks(enrichedIssues);
+    
+    // Fetch requests
+    const allRequests = db.getRequests();
+    setRequests(allRequests.filter(r => r.memberId === currentUser.id));
   };
 
   useEffect(() => {
@@ -160,6 +165,55 @@ const MemberDashboard = () => {
                       <Button variant="link" onClick={() => navigate("/catalog")} className="text-secondary mt-2">
                         Browse the library catalog →
                       </Button>
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {/* My Book Requests */}
+        <div className="rounded-xl border bg-card shadow-sm overflow-hidden">
+          <div className="px-6 py-4 border-b bg-muted/30 flex items-center justify-between">
+            <h3 className="font-display font-semibold text-foreground">My Book Requests</h3>
+            <Button variant="ghost" size="sm" onClick={() => navigate("/catalog")} className="text-xs text-secondary font-bold">
+              + Request New
+            </Button>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b bg-muted/10">
+                  <th className="px-6 py-4 text-left font-medium text-muted-foreground">Book Requested</th>
+                  <th className="px-6 py-4 text-left font-medium text-muted-foreground">Request Date</th>
+                  <th className="px-6 py-4 text-left font-medium text-muted-foreground">Status</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-muted">
+                {requests.length > 0 ? (
+                  requests.map((req) => (
+                    <tr key={req.id} className="hover:bg-muted/10 transition-colors">
+                      <td className="px-6 py-4">
+                        <div className="font-medium text-foreground">{req.bookTitle}</div>
+                        <div className="text-xs text-muted-foreground">{req.author}</div>
+                      </td>
+                      <td className="px-6 py-4 text-muted-foreground">{req.requestDate}</td>
+                      <td className="px-6 py-4">
+                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium capitalize ${
+                          req.status === "pending" ? "bg-warning/10 text-warning" :
+                          req.status === "fulfilled" ? "bg-success/10 text-success" :
+                          "bg-destructive/10 text-destructive"
+                        }`}>
+                          {req.status}
+                        </span>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan={3} className="px-6 py-12 text-center text-muted-foreground">
+                       <p className="text-xs italic opacity-60 font-medium">No book requests submitted yet.</p>
                     </td>
                   </tr>
                 )}

@@ -4,6 +4,7 @@ const STORAGE_KEYS = {
   BOOKS: "elibrary_books",
   MEMBERS: "elibrary_members",
   ISSUES: "elibrary_issues",
+  REQUESTS: "elibrary_requests",
   INITIALIZED: "elibrary_initialized",
   CURRENT_USER: "elibrary_current_user",
 };
@@ -34,6 +35,7 @@ export const initializeDatabase = () => {
     saveToStorage(STORAGE_KEYS.BOOKS, MOCK_BOOKS);
     saveToStorage(STORAGE_KEYS.MEMBERS, MOCK_MEMBERS);
     saveToStorage(STORAGE_KEYS.ISSUES, []);
+    saveToStorage(STORAGE_KEYS.REQUESTS, []);
     localStorage.setItem(STORAGE_KEYS.INITIALIZED, "true");
     console.log("Database initialized with mock data.");
   }
@@ -114,6 +116,30 @@ export const db = {
       i.id === issueId ? { ...i, returnDate: new Date().toISOString().split("T")[0] } : i
     );
     saveToStorage(STORAGE_KEYS.ISSUES, updated);
+  },
+
+  // --- Requests ---
+  getRequests: (): any[] => {
+    initializeDatabase();
+    return getFromStorage<any[]>(STORAGE_KEYS.REQUESTS, []);
+  },
+
+  addRequest: (request: Omit<any, "id" | "requestDate" | "status">): any => {
+    const requests = db.getRequests();
+    const newRequest: any = {
+      ...request,
+      id: Math.random().toString(36).substr(2, 9),
+      requestDate: new Date().toISOString().split("T")[0],
+      status: "pending"
+    };
+    saveToStorage(STORAGE_KEYS.REQUESTS, [...requests, newRequest]);
+    return newRequest;
+  },
+
+  updateRequestStatus: (requestId: string, status: "pending" | "fulfilled" | "cancelled") => {
+    const requests = db.getRequests();
+    const updated = requests.map(r => r.id === requestId ? { ...r, status } : r);
+    saveToStorage(STORAGE_KEYS.REQUESTS, updated);
   }
 };
 

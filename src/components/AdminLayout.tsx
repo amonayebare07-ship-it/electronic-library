@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
-import { BookOpen, Users, FileText, UserCog, LayoutDashboard, LogOut, BookCopy } from "lucide-react";
+import { BookOpen, Users, FileText, UserCog, LayoutDashboard, LogOut, BookCopy, Inbox } from "lucide-react";
 
 const adminLinks = [
   { to: "/admin", label: "Dashboard", icon: LayoutDashboard },
   { to: "/admin/books", label: "Books", icon: BookOpen },
   { to: "/admin/members", label: "Members", icon: Users },
   { to: "/admin/issues", label: "Book Issues", icon: BookCopy },
+  { to: "/admin/requests", label: "Book Requests", icon: Inbox },
   { to: "/admin/authors", label: "Authors", icon: FileText },
   { to: "/admin/publishers", label: "Publishers", icon: UserCog },
 ];
