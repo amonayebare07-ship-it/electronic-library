@@ -49,15 +49,22 @@ const Index = () => {
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
               <Link to="/catalog">
-                <Button size="lg" className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-semibold">
+                <Button size="lg" className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-semibold shadow-lg">
                   Browse Catalog
                 </Button>
               </Link>
-              <Link to="/signup">
-                <Button size="lg" variant="outline" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10">
-                  Become a Member
-                </Button>
-              </Link>
+              <div className="flex gap-2">
+                <Link to="/signup">
+                  <Button size="lg" variant="outline" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10">
+                    Student Signup
+                  </Button>
+                </Link>
+                <Link to="/admin/signup">
+                  <Button size="lg" variant="ghost" className="text-secondary hover:bg-secondary/10 font-medium">
+                    Admin Portal
+                  </Button>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
@@ -95,6 +102,39 @@ const Index = () => {
           ))}
         </div>
       </section>
+      {/* Role-based Signup Access */}
+      <section className="bg-muted/50 py-20">
+        <div className="container">
+          <div className="text-center mb-12">
+            <h2 className="font-display text-3xl font-bold text-foreground">Get Started Today</h2>
+            <p className="mt-3 text-muted-foreground">Select your account type to access the system features.</p>
+          </div>
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {/* Student Card */}
+            <div className="bg-card rounded-xl p-8 border border-border shadow-sm hover:shadow-md transition-shadow">
+              <div className="mb-4 h-12 w-12 rounded-full bg-secondary/10 flex items-center justify-center">
+                <Users className="h-6 w-6 text-secondary" />
+              </div>
+              <h3 className="text-xl font-bold mb-2">Student Account</h3>
+              <p className="text-muted-foreground mb-6">Access the digital catalog, borrow books, and manage your reading history from your personal dashboard.</p>
+              <Link to="/signup">
+                <Button className="w-full bg-secondary text-secondary-foreground hover:bg-secondary/90">Sign up as Student</Button>
+              </Link>
+            </div>
+            {/* Admin Card */}
+            <div className="bg-card rounded-xl p-8 border border-border shadow-sm hover:shadow-md transition-shadow">
+              <div className="mb-4 h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
+                <Shield className="h-6 w-6 text-primary" />
+              </div>
+              <h3 className="text-xl font-bold mb-2">Librarian / Admin</h3>
+              <p className="text-muted-foreground mb-6">Manage book inventory, register members, track issues, and monitor library performance metrics.</p>
+              <Link to="/admin/signup">
+                <Button variant="outline" className="w-full border-primary text-primary hover:bg-primary/10">Register as Admin</Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Stats */}
       <section className="bg-primary text-primary-foreground py-16">
@@ -117,14 +157,19 @@ const Index = () => {
 
       {/* CTA */}
       <section className="container py-20 text-center">
-        <h2 className="font-display text-3xl font-bold text-foreground">Ready to Get Started?</h2>
+        <h2 className="font-display text-3xl font-bold text-foreground">Ready to Join Us?</h2>
         <p className="mt-3 text-muted-foreground max-w-lg mx-auto">
-          Join our growing community of readers and researchers. Sign up today to access our complete catalog.
+          Experience the future of library management today. Choose your path and start your journey.
         </p>
-        <div className="mt-8">
+        <div className="mt-8 flex justify-center gap-4">
           <Link to="/signup">
             <Button size="lg" className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-semibold">
-              Create Your Account
+              Student Registration
+            </Button>
+          </Link>
+          <Link to="/admin/signup">
+            <Button size="lg" variant="outline" className="border-secondary text-secondary hover:bg-secondary/5 font-semibold">
+              Admin Registration
             </Button>
           </Link>
         </div>

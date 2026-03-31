@@ -14,6 +14,7 @@ export interface Member {
   id: string;
   name: string;
   email: string;
+  role: "student" | "admin";
   status: "active" | "pending" | "deactive";
   joinDate: string;
 }
@@ -40,11 +41,11 @@ export const MOCK_BOOKS: Book[] = [
 ];
 
 export const MOCK_MEMBERS: Member[] = [
-  { id: "1", name: "John Mukasa", email: "john@ksc.edu", status: "active", joinDate: "2024-09-01" },
-  { id: "2", name: "Grace Atuhaire", email: "grace@ksc.edu", status: "active", joinDate: "2024-09-15" },
-  { id: "3", name: "Peter Ochieng", email: "peter@ksc.edu", status: "pending", joinDate: "2024-10-01" },
-  { id: "4", name: "Sarah Namuli", email: "sarah@ksc.edu", status: "active", joinDate: "2024-08-20" },
-  { id: "5", name: "David Tumwine", email: "david@ksc.edu", status: "deactive", joinDate: "2024-07-10" },
+  { id: "1", name: "John Mukasa", email: "john@ksc.edu", role: "student", status: "active", joinDate: "2024-09-01" },
+  { id: "2", name: "Grace Atuhaire", email: "grace@ksc.edu", role: "student", status: "active", joinDate: "2024-09-15" },
+  { id: "3", name: "Peter Ochieng", email: "peter@ksc.edu", role: "student", status: "pending", joinDate: "2024-10-01" },
+  { id: "4", name: "Sarah Namuli", email: "sarah@ksc.edu", role: "student", status: "active", joinDate: "2024-08-20" },
+  { id: "5", name: "David Tumwine", email: "david@ksc.edu", role: "student", status: "deactive", joinDate: "2024-07-10" },
 ];
 
 export const CATEGORIES = ["All", "Computer Science", "Software Engineering", "Networking", "Operating Systems", "AI"];

@@ -9,7 +9,7 @@ import Index from "./pages/Index";
 import CatalogPage from "./pages/CatalogPage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
-import AdminLoginPage from "./pages/AdminLoginPage";
+import AdminSignupPage from "./pages/AdminSignupPage";
 import AboutPage from "./pages/AboutPage";
 import MemberDashboard from "./pages/MemberDashboard";
 import BookReaderPage from "./pages/BookReaderPage";
@@ -35,7 +35,8 @@ const App = () => (
             <Route path="/catalog" element={<CatalogPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />
-            <Route path="/admin/login" element={<AdminLoginPage />} />
+            <Route path="/admin/login" element={<LoginPage />} />
+            <Route path="/admin/signup" element={<AdminSignupPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/dashboard" element={<MemberDashboard />} />
             <Route path="/read/:bookId" element={<BookReaderPage />} />
